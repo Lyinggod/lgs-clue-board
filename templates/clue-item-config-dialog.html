@@ -1,0 +1,105 @@
+<form class="{{MODULE_ID}}-clue-item-config" autocomplete="off">
+    <div class="form-group">
+        <label for="clueName">{{localize "LGS_CB2.ClueItemConfig.ClueName"}}</label>
+        <input type="text" id="clueName" name="clueName" value="{{item.clueName}}" {{#unless canEditName}}disabled{{/unless}}>
+    </div>
+
+    {{#unless playerEditMode}} 
+        {{#if isGM}}
+        <div class="form-group">
+            <input type="checkbox" id="lockClueName" name="lockClueName" {{checked item.lockClueName}}>
+            <label for="lockClueName">{{localize "LGS_CB2.ClueItemConfig.LockName"}}</label>
+        </div>
+
+        <div class="form-group">
+            <label for="gmNotes">{{localize "LGS_CB2.ClueItemConfig.GMNotes"}}</label>
+            <textarea id="gmNotes" name="gmNotes" rows="3" placeholder="{{localize 'LGS_CB2.AddNoteDialog.GMTextPlaceholder'}}">{{item.gmNotes}}</textarea>
+        </div>
+    
+        <hr>
+        <h3>{{localize "LGS_CB2.ClueItemConfig.ImageAppearance"}}</h3>
+        {{#if (eq item.type "actor")}}
+        <div class="form-group">
+            <label for="imgPath">{{localize "LGS_CB2.ClueItemConfig.ImagePath"}}</label>
+            <div class="form-fields">
+                <input type="text" id="imgPath" name="img" value="{{item.img}}" placeholder="path/to/image.webp" data-dtype="String">
+                <button type="button" class="file-picker" data-target="img" data-type="imagevideo" title="{{localize 'LGS_CB2.SelectImage'}}">
+                    <i class="fas fa-file-import"></i>
+                </button>
+                 <button type="button" class="reset-image" title="{{localize 'LGS_CB2.ClueItemConfig.ResetImage'}}"><i class="fas fa-undo"></i> </button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="itemImageFrameType">{{localize "LGS_CB2.ClueItemConfig.ImageFrameType"}}</label>
+            <select name="imageFrameType" id="itemImageFrameType">
+                {{#each itemImageFrameTypes as |typeChoice|}}
+                <option value="{{typeChoice.value}}" {{#if (eq typeChoice.value ../item.imageFrameType)}}selected{{/if}}>{{typeChoice.label}}</option>
+                {{/each}}
+            </select>
+        </div>
+        {{/if}}
+
+        <div class="form-group stacked">
+            <div class="form-fields">
+                <label for="actorImageScale">{{localize "LGS_CB2.ClueItemConfig.Scale"}}:</label>
+                <input type="range" id="actorImageScale" name="actorImageScale" value="{{item.actorImageScale}}" min="0.1" max="3" step="0.05">
+                <span class="range-value">{{item.actorImageScale}}x</span>
+            </div>
+            <div class="form-fields">
+                <label for="actorImageOffsetX">{{localize "LGS_CB2.ClueItemConfig.OffsetX"}}:</label>
+                <input type="range" id="actorImageOffsetX" name="actorImageOffsetX" value="{{item.actorImageOffsetX}}" min="-100" max="100" step="1">
+                <span class="range-value">{{item.actorImageOffsetX}}px</span>
+            </div>
+            <div class="form-fields">
+                <label for="actorImageOffsetY">{{localize "LGS_CB2.ClueItemConfig.OffsetY"}}:</label>
+                <input type="range" id="actorImageOffsetY" name="actorImageOffsetY" value="{{item.actorImageOffsetY}}" min="-100" max="100" step="1">
+                <span class="range-value">{{item.actorImageOffsetY}}px</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="isBlurred" name="isBlurred" {{checked item.isBlurred}}>
+            <label for="isBlurred">{{localize "LGS_CB2.ClueItemConfig.BlurImage"}}</label>
+        </div>
+
+        <hr>
+        <h3>{{localize "LGS_CB2.ClueItemConfig.StatusFlags"}}</h3>
+        <div class="form-group">
+            <input type="checkbox" id="isDead" name="isDead" {{checked item.isDead}}>
+            <label for="isDead">{{localize "LGS_CB2.ClueItemConfig.IsDead"}}</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="isCaptured" name="isCaptured" {{checked item.isCaptured}}>
+            <label for="isCaptured">{{localize "LGS_CB2.ClueItemConfig.IsCaptured"}}</label>
+        </div>
+        
+        <hr>
+        <h3>{{localize "LGS_CB2.ClueItemConfig.Visibility"}}</h3>
+        <div class="form-group">
+            <input type="checkbox" id="isHiddenFromPlayer" name="isHiddenFromPlayer" {{checked item.isHiddenFromPlayer}}>
+            <label for="isHiddenFromPlayer">{{localize "LGS_CB2.ClueItemConfig.HideFromPlayer"}}</label>
+        </div>
+        
+        <hr>
+        <h3>{{localize "LGS_CB2.ClueItemConfig.Connections"}}</h3>
+        <div class="form-group connections-list">
+            {{#if connections.length}}
+            <ul>
+                {{#each connections as |conn|}}
+                <li data-connection-id="{{conn.id}}">
+                    <span>{{conn.displayText}}</span>
+                    <a class="delete-connection" title="{{localize 'LGS_CB2.DeleteConnection'}}"><i class="fas fa-trash"></i></a>
+                </li>
+                {{/each}}
+            </ul>
+            {{else}}
+            <p>{{localize "LGS_CB2.ClueItemConfig.NoConnections"}}</p>
+            {{/if}}
+        </div>
+        {{/if}} 
+    {{/unless}} 
+
+    <footer class="sheet-footer">
+        <button type="submit"><i class="fas fa-save"></i> {{localize "LGS_CB2.Save"}}</button>
+    </footer>
+</form>

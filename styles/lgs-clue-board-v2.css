@@ -1,0 +1,431 @@
+/* styles/lgs-clue-board-v2.css */
+
+.lgs-clue-board-v2 .window-content {
+    overflow-y: auto; /* For manager dialog if list is long */
+}
+
+.lgs-clue-board-manager .board-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 5px;
+}
+
+.lgs-clue-board-manager .board-entry {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border: 1px solid #7a7971;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.lgs-clue-board-manager .board-name {
+	width: 400px;
+}
+
+.lgs-clue-board-manager .board-entry.hidden-board .board-name {
+    font-style: italic;
+    color: #888;
+}
+.lgs-clue-board-manager .board-name.clickable.glow-hover:hover {
+	background-color: #9d5a002e;
+    xtext-shadow: 0 0 8px orange;
+    xcursor: pointer;
+}
+
+.lgs-clue-board-manager .board-actions a,
+.lgs-clue-board-manager .board-actions button {
+    margin-left: 5px;
+}
+
+/* Clue Board Dialog */
+.lgs-clue-board-app .window-content {
+    padding: 0 !important; 
+    overflow: hidden !important; 
+}
+.lgs-clue-board-dialog-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: auto; 
+}
+.clue-board-canvas {
+    position: relative; 
+    background-color: #eee; 
+    overflow: hidden; 
+    /* Ensure canvas itself doesn't allow text selection during marquee */
+    user-select: none;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10+ */
+}
+.clue-board-config-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+}
+.clue-board-config-button:hover {
+    background: #f0f0f0;
+}
+
+/* Clue Board Config Dialog */
+.lgs-clue-board-config .form-fields {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.lgs-clue-board-config .form-fields > label {
+    flex-basis: 100px; 
+    flex-shrink: 0;
+}
+.lgs-clue-board-config input[type="range"] {
+    flex-grow: 1;
+}
+.lgs-clue-board-config .range-value {
+    min-width: 50px; 
+    text-align: right;
+}
+.lgs-clue-board-config label[for="imageFrameType"] {
+    flex-basis: auto !important; /* Allow this label to take natural width */
+    margin-right: 10px;
+}
+.lgs-clue-board-config select#imageFrameType {
+    flex-grow: 1;
+}
+
+
+/* Clue Items */
+.clue-item {
+    user-select: none; 
+    cursor: grab;
+    border: 1px dashed transparent; 
+}
+.clue-item.clue-item-frame-square,
+.clue-item.clue-item-frame-circle {
+    background-color: #f0f0f0; 
+}
+
+
+.clue-item.dragging {
+    cursor: grabbing;
+    opacity: 0.7;
+    z-index: 100 !important; 
+    border: 1px dashed #ff9800 !important; /* Ensure drag border is visible */
+}
+.clue-item.locked {
+}
+.clue-item .item-frame-bg {
+    pointer-events: none; 
+}
+.clue-item .actorImageHolder, .clue-item .actorImage {
+     pointer-events: none; 
+}
+
+/* Item Selection Highlight (Local User - Green Border) */
+.clue-item.item-selected-highlight {
+    outline: 3px solid lightgreen !important;
+    /* box-shadow: 0 0 10px lightgreen, inset 0 0 5px rgba(144, 238, 144, 0.5) !important; */
+    border: 2px solid lightgreen !important; 
+}
+.clue-item.dragging.item-selected-highlight {
+    border: 2px solid orange !important; /* Dragging border takes precedence */
+    outline: 3px solid lightgreen !important; /* Keep outline if also selected */
+}
+
+
+.item-context-menu-icons {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+.item-context-menu-icons a {
+    display: block;
+    padding: 3px;
+    cursor: pointer;
+}
+.item-context-menu-icons a:hover {
+    background-color: #eee;
+}
+.item-context-menu-icons i {
+    font-size: 1.2em;
+    color: #333;
+}
+.connections-svg line.gm-line {
+    stroke: #502460; 
+}
+.connections-svg line:hover {
+    stroke: yellow;
+    stroke-width: 4px;
+}
+
+/* GM Note Preview (on Clue Board Dialog) */
+.gm-note-preview {
+    position: absolute;
+    top: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%; 
+    max-width: 500px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 2000; 
+    pointer-events: none; 
+    max-height: 150px; 
+    overflow-y: auto;
+}
+.gm-note-preview-content {
+    color: black;
+    font-size: 0.9em;
+    word-wrap: break-word;
+}
+
+/* GM Note Indicator (on Clue Items) */
+.clue-item .gm-note-indicator {
+    position: absolute;
+    z-index: 5; 
+    color: #FFC107; 
+    font-size: 1.2em; 
+    /* background: rgba(0,0,0,0.3); */
+    border-radius: 3px;
+    padding: 1px 3px;
+    line-height: 1; 
+}
+.clue-item.actor-item .gm-note-indicator {
+    bottom: 5px;
+    right: 5px;
+}
+.clue-item.note-item .gm-note-indicator {
+    top: 3px; 
+    left: 3px;
+}
+
+/* Connection List in Config Dialogs */
+.connections-list ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 5px;
+    max-height: 100px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 3px;
+}
+.connections-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 3px 0;
+    border-bottom: 1px dashed #eee;
+}
+.connections-list li:last-child {
+    border-bottom: none;
+}
+.connections-list li span {
+    flex-grow: 1;
+    margin-right: 10px;
+    font-size: 0.9em;
+}
+.connections-list li a.delete-connection {
+    color: #c00;
+    cursor: pointer;
+}
+.connections-list li a.delete-connection:hover {
+    color: #f00;
+}
+
+/* Add Clue Dialog Palette */
+.lgs-clue-board-v2-add-clue-dialog .clue-palette {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    max-height: 400px; 
+    overflow-y: auto;
+}
+.lgs-clue-board-v2-add-clue-dialog .palette-item {
+    width: 60px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    cursor: grab;
+    background-color: #f9f9f9;
+}
+.lgs-clue-board-v2-add-clue-dialog .palette-item:hover {
+    background-color: #eee;
+    border-color: #aaa;
+}
+.lgs-clue-board-v2-add-clue-dialog .palette-item-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px; 
+}
+.lgs-clue-board-v2-add-clue-dialog .palette-item-icon.actor-icon {
+    object-fit: cover; 
+    border: 1px solid #ddd;
+}
+.lgs-clue-board-v2-add-clue-dialog .palette-item-name {
+    font-size: 0.8em;
+    text-align: center;
+    word-break: break-word; 
+    max-height: 2.4em; 
+    overflow: hidden;
+}
+
+/* Node Counter Display */
+.clue-item.node-item .node-counter-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10px; 
+    font-weight: bold;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.5); 
+    padding: 0px 2px;
+    border-radius: 2px;
+    pointer-events: none; 
+    z-index: 3; 
+}
+.clue-item.node-item .node-counter-display.highlighted {
+    color: red;
+    font-size: 12px; 
+}
+
+/* GM Only Styling for Hidden Items */
+.clue-item.gm-hidden-item {
+    opacity: 0.5;
+}
+.clue-item.gm-hidden-item:hover {
+    opacity: 0.75;
+}
+
+/* Reveal Image Dialog Styling */
+.dialog-no-header .window-header {
+    display: none;
+}
+.dialog-no-header.window-app .window-content {
+    border-top: none;
+    border-radius: 3px; 
+}
+.reveal-image-dialog-app .window-content {
+    padding: 0 !important;
+    background: transparent; 
+    overflow: hidden;
+}
+.reveal-image-dialog-app.window-app { 
+    box-shadow: none !important;
+    background: rgba(0,0,0,0.65) !important; 
+    border: none !important;
+}
+.revealed-image-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer; 
+}
+.revealed-image-content img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    border: 2px solid #444; 
+}
+.{{MODULE_ID}}-flex-center { 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lgs-clue-board-v2-clue-item-config label, .lgs-clue-board-v2-clue-board-config label {
+	white-space: nowrap;
+}
+
+/* Marquee Selection Rectangle */
+.marquee-select-rect {
+    position: absolute;
+    border: 1px dashed #007bff; /* Or your preferred color */
+    background-color: rgba(0, 123, 255, 0.1); /* Light semi-transparent fill */
+    pointer-events: none; /* Allows clicks to pass through to items if needed, though generally not an issue */
+    z-index: 9999; /* Ensure it's above items but below context menus etc. */
+}
+
+/* User Selection Circles */
+.user-selection-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid white;
+    position: absolute;
+    z-index: 4; /* Above items (z-index 2), below item context icons (z-index 10+) */
+    box-shadow: 0 0 3px rgba(0,0,0,0.7);
+    /* pointer-events: none; Initially, but will be 'auto' for hover */
+}
+
+/* Custom Tooltip for User Selection Circles */
+.user-selection-circle-tooltip {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 8px;
+    position: absolute;
+    z-index: 1001; /* High z-index to appear above other elements */
+    bottom: 125%; /* Position above the circle, adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.8em;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.user-selection-circle-tooltip::after { /* Arrow for the tooltip */
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+.user-selection-circle:hover .user-selection-circle-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.lgs-clue-board-v2-flex-center {
+	max-height:650px;
+	max-width:650px;
+}
+
+.lgs-clue-board-manager .add-board {
+	width: 40px;
+}

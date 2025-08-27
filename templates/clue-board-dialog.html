@@ -1,0 +1,41 @@
+<div class="lgs-clue-board-dialog-wrapper">
+    {{!-- Config Cog --}}
+    {{#if isGM}}
+    <div class="clue-board-config-button" title="{{localize 'LGS_CB2.ConfigTitle'}}">
+        <i class="fas fa-cog"></i>
+    </div>
+    {{/if}}
+
+    {{!-- GM Note Preview Div (Initially Hidden) --}}
+    {{#if isGM}}
+    <div class="gm-note-preview" style="display: none;">
+        <div class="gm-note-preview-content"></div>
+    </div>
+    {{/if}}
+
+
+    {{!-- The Board Area --}}
+    <div class="clue-board-canvas" 
+         style="width: {{board.config.width}}px; height: {{board.config.height}}px; 
+                background-image: url('{{board.config.backgroundImage}}'); 
+                background-size: {{board.config.backgroundScaleX}}px {{board.config.backgroundScaleY}}px;
+                background-position: center; background-repeat: no-repeat;
+                position: relative; 
+                overflow: hidden;
+                ">
+
+        <svg class="connections-svg" width="100%" height="100%" 
+             style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 1;">
+        </svg>
+
+        {{#each board.items as |item|}}
+            {{{renderClueItem item ../board.config}}}
+        {{/each}}
+
+        {{!-- Layer for User Selection Circles --}}
+        <div class="user-selection-circles-layer" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 3;">
+            {{!-- Circles will be dynamically added here by JS --}}
+        </div>
+        
+    </div>
+</div>

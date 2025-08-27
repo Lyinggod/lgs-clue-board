@@ -1,0 +1,51 @@
+<div class="{{MODULE_ID}}-add-clue-dialog">
+    <div class="instructions-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1em;">
+        <p style="margin-right: auto; margin-top:0; margin-bottom:0;">{{localize "LGS_CB2.AddClueDialog.Instructions"}}</p>
+        <a class="dialog-help-button" title="{{localize 'LGS_CB2.AddClueDialog.HelpTitle'}}" style="margin-left: 10px; font-size: 1.2em; color: var(--color-text-dark-primary); cursor: pointer;">
+            <i class="fas fa-question-circle"></i>
+        </a>
+    </div>
+
+    {{#if isGM}}
+    <div class="form-group-row" style="display: flex; align-items: center; margin-bottom: 10px; gap: 20px;">
+        <div class="form-group" style="display: flex; align-items: center; margin-bottom: 0;">
+            <input type="checkbox" id="{{MODULE_ID}}-useActorName" name="useActorName" {{checked useActorName}}>
+            <label for="{{MODULE_ID}}-useActorName" style="margin-left: 5px;">{{localize "LGS_CB2.AddClueDialog.UseActorName"}}</label>
+        </div>
+        <div class="form-group" style="display: flex; align-items: center; margin-bottom: 0;">
+            <input type="checkbox" id="{{MODULE_ID}}-hideAddedItemFromPlayer" name="hideAddedItemFromPlayer" {{checked hideAddedItemFromPlayer}}>
+            <label for="{{MODULE_ID}}-hideAddedItemFromPlayer" style="margin-left: 5px;">{{localize "LGS_CB2.AddClueDialog.HideFromPlayer"}}</label>
+        </div>
+    </div>
+    {{/if}}
+
+    <div class="clue-palette">
+        {{#if isGM}}
+            <!-- Node/Circle Draggable (GM Only) -->
+            <div class="palette-item draggable-clue" data-clue-type="node" title="{{localize 'LGS_CB2.AddClueDialog.AddNodeTitle'}}">
+                <div class="palette-item-icon node-icon">
+                    <svg width="50" height="50" viewBox="0 0 50 50">
+                        <circle cx="25" cy="25" r="20" stroke="black" stroke-width="2" fill="white" />
+                    </svg>
+                </div>
+                <div class="palette-item-name">{{localize "LGS_CB2.AddClueDialog.NodeLabel"}}</div>
+            </div>
+        {{/if}}
+
+        <!-- Placeholder Actor Image Draggable (Available to GM and Players) -->
+        <div class="palette-item draggable-clue" data-clue-type="placeholder-actor-image" title="{{localize 'LGS_CB2.AddClueDialog.PlaceholderActorTitle'}}">
+            <img src="{{placeholderImagePath}}" class="palette-item-icon placeholder-actor-icon" alt="{{localize 'LGS_CB2.AddClueDialog.PlaceholderActorLabel'}}">
+            <div class="palette-item-name">{{localize "LGS_CB2.AddClueDialog.PlaceholderActorLabel"}}</div>
+        </div>
+
+        {{#if isGM}}
+            <!-- Actor Draggables (GM Only) -->
+            {{#each availableActors as |actor|}}
+            <div class="palette-item draggable-clue" data-clue-type="actor" data-actor-id="{{actor.id}}" title="{{actor.name}}">
+                <img src="{{actor.img}}" class="palette-item-icon actor-icon" alt="{{actor.name}}">
+                <div class="palette-item-name">{{actor.name}}</div>
+            </div>
+            {{/each}}
+        {{/if}}
+    </div>
+</div>

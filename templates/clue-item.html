@@ -1,0 +1,87 @@
+<div class="clue-item actor-item 
+    {{#if item.isLocked}}locked{{/if}} 
+    {{#if item.isBlurred}}blurred-item{{/if}} 
+    {{#if isGMHidden}}gm-hidden-item{{/if}}
+    clue-item-frame-{{boardConfig.imageFrameType}}"
+     data-item-id="{{item.id}}" 
+     style="left: {{item.x}}px; top: {{item.y}}px; 
+            width: {{item.width}}px; height: {{item.height}}px; 
+            position: absolute; box-sizing: border-box; z-index: 2;
+            transform: scale({{boardConfig.globalItemScale}}); transform-origin: center center;
+            {{#if (eq boardConfig.imageFrameType "circle")}}
+                border-radius: 50%; /* Shape the main div for circle */
+                /* No overflow:hidden here, move to actorImageHolder if needed for image itself */
+            {{else if (eq boardConfig.imageFrameType "square")}}
+                border: 1px solid #555; 
+                background-color: #fff; 
+                /* No overflow:hidden here */
+            {{/if}}
+            ">
+    
+    {{#if (eq boardConfig.imageFrameType "photo")}}
+    <img src="modules/{{MODULE_ID}}/assets/photoFrame.webp" class="item-frame-bg" alt="Frame" 
+         style="width: 100%; height: 100%; object-fit: fill; position: absolute; top:0; left:0; z-index:1;">
+    {{/if}}
+    
+    <div class="actorImageHolder" 
+         style="width: {{#if (eq boardConfig.imageFrameType "photo")}}calc({{item.width}}px - 40px){{else}}100%{{/if}};
+                height: {{#if (eq boardConfig.imageFrameType "photo")}}calc({{item.height}}px - 80px){{else}}100%{{/if}};
+                position: absolute; 
+                top: {{#if (eq boardConfig.imageFrameType "photo")}}50%{{else}}0{{/if}}; 
+                left: {{#if (eq boardConfig.imageFrameType "photo")}}50%{{else}}0{{/if}}; 
+                transform: {{#if (eq boardConfig.imageFrameType "photo")}}translate(-50%, -50%){{else}}none{{/if}};
+                z-index:2; 
+                overflow:hidden; /* Apply overflow hidden here to clip the image content */
+                {{#if (eq boardConfig.imageFrameType "circle")}}border-radius: 50%;{{/if}} 
+                /* For square, overflow:hidden on actorImageHolder is fine */
+                ">
+
+        <div class="actorImage" 
+             style="background-image: url('{{item.img}}'); 
+                    width: 100%; 
+                    height: 100%; 
+                    background-size: cover; 
+                    background-position: 50% 0%; 
+                    transform: scale({{item.actorImageScale}}) translate({{item.actorImageOffsetX}}px, {{item.actorImageOffsetY}}px);
+                    {{#if item.isBlurred}}filter: blur(4px);{{/if}}">
+        </div>
+    </div>
+
+    {{#if item.clueName}}
+    <div class="clue-item-name" 
+        style="position: absolute; 
+               bottom: {{#if (eq boardConfig.imageFrameType "photo")}}10px{{else}}5px{{/if}}; 
+               left: {{#if (eq boardConfig.imageFrameType "circle")}}15%{{else}}5px{{/if}}; /* Indent more for circle */
+               right: {{#if (eq boardConfig.imageFrameType "circle")}}15%{{else}}5px{{/if}}; /* Indent more for circle */
+               text-align: center; color: white; 
+               background: rgba(0,0,0,0.6); 
+               z-index: 3; padding: 2px 0; font-size: 0.9em;
+               border-radius: 3px; /* General radius, might be good for all */
+               /* For circle, this width adjustment helps prevent corners from being too prominent */
+               /* If it's a circle, the container itself is already rounded. */
+               ">
+        {{item.clueName}}
+    </div>
+    {{/if}}
+    
+    {{#if item.isDead}}
+    <div class="status-icon dead-icon" style="position:absolute; top:10px; left:10px; z-index:4; font-size: 2em; color: red;" title="Deceased">
+        <i class="fas fa-skull-crossbones"></i>
+    </div>
+    {{/if}}
+    {{#if item.isCaptured}}
+    <div class="status-icon captured-icon" style="position:absolute; top:10px; right:10px; z-index:4; font-size: 2em; color: blue;" title="Captured">
+        <i class="fas fa-handcuffs"></i>
+    </div>
+    {{/if}}
+
+    {{#if hasGMNotes}}
+    <div class="gm-note-indicator" title="{{localize 'LGS_CB2.HasGMNoteTitle'}}" style="position: absolute; top: 10px; left: 10px; z-index: 4; font-size: 1.5em; color: #ffeb3b; -webkit-text-stroke: 1px black;">
+        <i class="fas fa-sticky-note"></i>
+    </div>
+    {{/if}}
+
+    <div class="item-context-menu-icons" style="position: absolute; left: -30px; top: 10px; display: none; flex-direction: column; gap: 5px; z-index: 100;">
+        <!-- Increased z-index for icons -->
+    </div>
+</div>

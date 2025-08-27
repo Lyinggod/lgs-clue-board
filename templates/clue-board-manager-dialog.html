@@ -1,0 +1,35 @@
+<div class="lgs-clue-board-manager">
+    <header class="dialog-header">
+        <h1>{{localize "LGS_CB2.ClueBoardManagerTitle"}}
+        {{#if isGM}}
+        <button type="button" class="add-board" title="{{localize "LGS_CB2.AddClueBoard"}}"><i class="fas fa-plus"></i> </button>
+        {{/if}}
+		</h1>
+    </header>
+
+    <section class="board-list">
+        {{#if boards}}
+            {{#each boards as |board|}}
+            <div class="board-entry {{#if board.isHidden}}hidden-board{{/if}}" data-board-id="{{board.id}}">
+                <div class="board-name {{#unless board.isHidden}}clickable glow-hover{{/unless}}" title="{{#if board.isHidden}}(Hidden from Players) {{/if}}{{localize 'LGS_CB2.View'}} {{board.name}}">
+                    {{board.name}}
+                </div>
+                <div class="board-actions">
+                    {{#if ../isGM}}
+                    <a class="rename-board" title="{{localize 'LGS_CB2.Rename'}}"><i class="fas fa-edit"></i></a>
+                    <a class="toggle-hide-board" title="{{#if board.isHidden}}{{localize 'LGS_CB2.Show'}}{{else}}{{localize 'LGS_CB2.Hide'}}{{/if}}">
+                        <i class="fas {{#if board.isHidden}}fa-eye-slash{{else}}fa-eye{{/if}}"></i>
+                    </a>
+                    <a class="delete-board" title="{{localize 'LGS_CB2.Delete'}}"><i class="fas fa-trash"></i></a>
+                    {{/if}}
+                    {{#unless board.isHidden}}
+                        <!-- <button class="view-board">{{localize 'LGS_CB2.View'}}</button> -->
+                    {{/unless}}
+                </div>
+            </div>
+            {{/each}}
+        {{else}}
+            <p>{{localize "No clue boards created yet."}}</p>
+        {{/if}}
+    </section>
+</div>

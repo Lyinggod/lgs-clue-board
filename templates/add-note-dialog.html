@@ -1,0 +1,53 @@
+<form class="{{MODULE_ID}}-add-note-dialog" autocomplete="off">
+    <div class="form-group">
+        <label for="playerText">{{localize "LGS_CB2.AddNoteDialog.PlayerText"}}</label>
+        <textarea name="playerText" id="playerText" rows="5" data-dtype="String">{{data.playerText}}</textarea>
+    </div>
+
+    {{#if isGM}}
+    <div class="form-group">
+        <label for="gmText">{{localize "LGS_CB2.AddNoteDialog.GMText"}}</label>
+        <textarea name="gmText" id="gmText" rows="3" data-dtype="String" placeholder="{{localize 'LGS_CB2.AddNoteDialog.GMTextPlaceholder' fallback='Optional GM-only notes...'}}">{{data.gmText}}</textarea>
+    </div>
+    {{/if}}
+
+    <div class="form-group">
+        <label for="fontSize">{{localize "LGS_CB2.AddNoteDialog.FontSize"}}</label>
+        <div class="form-fields">
+            <input type="range" name="fontSize" id="fontSize" value="{{data.fontSize}}" min="10" max="50" step="1">
+            <span class="range-value">{{data.fontSize}}px</span>
+        </div>
+    </div>
+
+    {{#if isGM}}
+        {{#if isEditMode}}
+            <hr>
+            <h3>{{localize "LGS_CB2.ClueItemConfig.Visibility"}}</h3>
+             <div class="form-group">
+                <input type="checkbox" id="noteIsHiddenFromPlayer" name="isHiddenFromPlayer" {{checked data.isHiddenFromPlayer}}>
+                <label for="noteIsHiddenFromPlayer">{{localize "LGS_CB2.AddNoteDialog.HideFromPlayer"}}</label>
+            </div>
+
+            <hr>
+            <h3>{{localize "LGS_CB2.ClueItemConfig.Connections"}}</h3>
+            <div class="form-group connections-list">
+                {{#if connections.length}}
+                <ul>
+                    {{#each connections as |conn|}}
+                    <li data-connection-id="{{conn.id}}">
+                        <span>{{conn.displayText}}</span>
+                        <a class="delete-connection" title="{{localize 'LGS_CB2.DeleteConnection'}}"><i class="fas fa-trash"></i></a>
+                    </li>
+                    {{/each}}
+                </ul>
+                {{else}}
+                <p>{{localize "LGS_CB2.ClueItemConfig.NoConnections"}}</p>
+                {{/if}}
+            </div>
+        {{/if}}
+    {{/if}}
+
+    <footer class="sheet-footer">
+        <button type="submit"><i class="fas fa-save"></i> {{localize "LGS_CB2.Save"}}</button>
+    </footer>
+</form>

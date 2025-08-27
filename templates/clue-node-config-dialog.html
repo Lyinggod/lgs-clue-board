@@ -1,0 +1,29 @@
+<form class="{{MODULE_ID}}-clue-node-config" autocomplete="off">
+    <div class="form-group">
+        <p><strong>{{localize "LGS_CB2.NodeConfig.NodeName"}}:</strong> {{item.clueName}}</p>
+        <p><em>({{localize "LGS_CB2.NodeConfig.NodeDescription"}})</em></p>
+    </div>
+    
+    {{#if isGM}}
+    <hr>
+    <h3>{{localize "LGS_CB2.ClueItemConfig.Connections"}}</h3>
+    <div class="form-group connections-list">
+        {{#if connections.length}}
+        <ul>
+            {{#each connections as |conn|}}
+            <li data-connection-id="{{conn.id}}">
+                <span>{{conn.displayText}}</span>
+                <a class="delete-connection" title="{{localize 'LGS_CB2.DeleteConnection'}}"><i class="fas fa-trash"></i></a>
+            </li>
+            {{/each}}
+        </ul>
+        {{else}}
+        <p>{{localize "LGS_CB2.ClueItemConfig.NoConnections"}}</p>
+        {{/if}}
+    </div>
+    {{/if}}
+
+    <footer class="sheet-footer">
+        <button type="button" class="dialog-close"><i class="fas fa-times"></i> {{localize "LGS_CB2.Close"}}</button>
+    </footer>
+</form>
