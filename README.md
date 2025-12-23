@@ -70,7 +70,7 @@ The right clicking on items in the clue board will show an options menu.
 # CONFIGURE CLUE BOARD
 <img src="https://github.com/Lyinggod/lgs-clue-board/blob/main/images/clue-board-config.webp" width="400"/>
 
-- **Board Dimesnions** - Changes the size of the clue board.
+- **Board Dimensions** - Changes the size of the clue board.
 - **Background Image** - Set the background image of the clue board.
 - **Background Scale** - Change the size of the background image of the clue board.
 - **Global Item Scale** - Change the size of items on the clue board.
