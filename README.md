@@ -72,4 +72,12 @@ The right clicking on items in the clue board will show an options menu.
 - **Image Frame Type** - Set the default frame type for the clue board
 - **Prevent Player Interaction** - Used if clue board is entirely for informational purposes
 
-## Installing the Module
+# Installation
+
+## Method
+
+1. On Foundry VTT's __Configuration and Setup__ screen, go to __Add-on Modules__
+2. Click __Install Module__
+3. In the Manifest URL field, paste: `https://raw.githubusercontent.com/TeddyBears/StarWarsFFG-alternative-UI/main/module.json`
+4. Click __Install__ next to the pasted Manifest URL
+talling the Module
