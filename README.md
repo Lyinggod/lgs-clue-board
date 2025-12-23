@@ -1,4 +1,9 @@
-Creates clue board style note and picture repository for Foundry Vtt.
+Creates a clue board style note and picture repository for Foundry Vtt.
+
+**Uses:**
+- Tracking Clues in an invesigation
+- Track factions and alliances
+- Show organizational structures
 
 <img src="https://github.com/Lyinggod/lgs-clue-board/blob/main/images/clue-board.webp" width="500"/>
 
@@ -73,11 +78,8 @@ The right clicking on items in the clue board will show an options menu.
 - **Prevent Player Interaction** - Used if clue board is entirely for informational purposes
 
 # Installation
+Install through Foundry or copy and paste the following manifest URL into the module installation dialog in Foundry VTT
 
-## Method
-
-1. On Foundry VTT's __Configuration and Setup__ screen, go to __Add-on Modules__
-2. Click __Install Module__
-3. In the Manifest URL field, paste: `https://raw.githubusercontent.com/TeddyBears/StarWarsFFG-alternative-UI/main/module.json`
-4. Click __Install__ next to the pasted Manifest URL
-talling the Module
+```javascript
+https://github.com/Lyinggod/lgs-clueoboard/releases/latest/download/module.json
+```
