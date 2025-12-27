@@ -1,5 +1,5 @@
-export const MODULE_ID = 'lgs-clue-board-v2';
-export const MODULE_NAME = 'Lyinggods Clue Board v2';
+export const MODULE_ID = 'lgs-clue-board';
+export const MODULE_NAME = 'Lyinggods Clue Board';
 
 export const FLAGS = {
     CLUEBOARDS: 'clueBoardsData'

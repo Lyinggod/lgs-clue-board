@@ -2,32 +2,17 @@
   "id": "lgs-clue-board",
   "title": "Lyinggods Clue Board",
   "description": "A module to create and manage interactive clue boards for investigations.",
-  "version": "1.0.0",
-  "compatibility": {
-    "minimum": "12",
-    "verified": "12"
-  },
+  "version": "1.1.0",
   "authors": [
     {
       "name": "Lyinggod",
-	  "url": "https://github.com/Lyinggod"
+      "url": "https://github.com/Lyinggod"
     }
   ],
   "compatibility": {
     "minimum": "11.0.0",
-    "verified": "12.999",
-    "maximum": "12.999"
+    "verified": "12"
   },
-  "systems": [
-    {
-      "id": "starwarsffg",
-      "manifest": "https://path-to-starwarsffg-system/module.json",
-      "compatibility": {
-        "minimum": "1.8",
-        "verified": "1.905"
-      }
-    }
-  ],
   "socket": true,
   "relationships": {
     "requires": [
@@ -37,10 +22,21 @@
       }
     ]
   },
- "esmodules": ["scripts/lgs-clue-board.js"],
-  "languages": [],
-  "manifest": "https://github.com/Lyinggod/lgs-clue-board/releases/download/v1.0.0/module.json",
-  "download": "https://github.com/Lyinggod/lgs-clue-board/releases/download/v1.0.0/lgs-clue-board.zip",
+  "esmodules": [
+    "scripts/lgs-clue-board.js"
+  ],
+  "styles": [
+    "styles/lgs-clue-board.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "manifest": "https://github.com/Lyinggod/lgs-clue-board/releases/download/v1.1.0/module.json",
+  "download": "https://github.com/Lyinggod/lgs-clue-board/releases/download/v1.1.0/lgs-clue-board.zip",
   "url": "https://github.com/Lyinggod/lgs-clue-board",
   "readme": "https://github.com/Lyinggod/lgs-clue-board/blob/main/README.md"
 }

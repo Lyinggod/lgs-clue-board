@@ -67,30 +67,7 @@ export class ClueBoardData {
         return boardId;
     }
 	
-    static async addBoard(name) {
-        const boardId = foundry.utils.randomID();
-        const newBoard = {
-            id: boardId, name: name, isHidden: false,
-            config: {
-                width: 1000, height: 1000, backgroundImage: "",
-                backgroundScaleX: 1000, backgroundScaleY: 1000,
-                lockBackgroundScaleProportion: true,
-                globalItemScale: 1.0, 
-                preventPlayerMove: false, blurPlacedImages: false,
-                imageFrameType: "photo" 
-            },
-            items: {}, 
-            connections: [],
-            itemSelections: {} // Added for user selection circles
-        };
-        const allBoards = this.allBoardsData;
-        allBoards[boardId] = newBoard;
-        await this.saveAllBoardsData(allBoards);
-        socketController.broadcastBoardDataUpdate(null, allBoards);
-        return boardId;
-    }
-
-    static async deleteBoard(boardId) {
+        static async deleteBoard(boardId) {
         const { socketController } = await import('./SocketController.js');
         const allBoards = this.allBoardsData;
         delete allBoards[boardId];

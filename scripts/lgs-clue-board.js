@@ -1,7 +1,8 @@
 import { MODULE_ID, MODULE_NAME, TEMPLATES, FLAGS } from './constants.js';
 import { ClueBoardManagerDialog } from './ClueBoardManagerDialog.js';
 import { socketController } from './SocketController.js';
-import './ClueBoardDialog.js';
+import { ClueBoardDialog } from './ClueBoardDialog.js';
+import { ClueBoardData } from './ClueBoardData.js';
 import './ClueBoardConfigDialog.js';
 import { ClueItemConfigDialog } from './ClueItemConfigDialog.js';
 import { AddClueDialog } from './AddClueDialog.js'; 
@@ -37,7 +38,24 @@ Hooks.once('init', () => {
     game.modules.get(MODULE_ID).api = {
         ClueBoardManagerDialog,
         RevealImageDialog, // Expose if needed for macros, etc.
-        openManager: () => new ClueBoardManagerDialog().render(true)
+        openManager: () => new ClueBoardManagerDialog().render(true),
+        /**
+         * --- MODIFICATION START ---
+         * API function to open a specific Clue Board by its ID.
+         * Used by the hotbar macro.
+         * @param {string} boardId The ID of the board to open.
+         * --- MODIFICATION END ---
+         */
+        openBoard: (boardId) => {
+            const boardData = ClueBoardData.getBoardData(boardId);
+            if (!boardData) {
+                return ui.notifications.warn(`Clue board with ID "${boardId}" no longer exists.`);
+            }
+            if (boardData.isHidden && !game.user.isGM) {
+                return ui.notifications.warn("This clue board is currently hidden by the GM.");
+            }
+            new ClueBoardDialog(boardId).render(true);
+        }
     };
 
     console.log(`${MODULE_ID} | INIT Hook End`);

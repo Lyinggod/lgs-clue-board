@@ -1,6 +1,6 @@
-// scripts/SocketController.js
-import { MODULE_ID, SOCKET_EVENT } from './constants.js';
+
 import { ClueBoardData } from './ClueBoardData.js'; // Added for GM-side item addition
+import { MODULE_ID, SOCKET_EVENT } from './constants.js';
 
 class SocketController {
     constructor() {
@@ -37,7 +37,7 @@ class SocketController {
                             );
                             if (clueBoardApp) {
                                 clueBoardApp.currentBoardData = updatedBoardData;
-                                clueBoardApp.render(false);
+                                clueBoardApp.render(false, { focus: false });
                             }
                         }
                     } catch (error) {
@@ -74,6 +74,15 @@ class SocketController {
                     await ClueBoardData.updateItem(boardId, itemId, updates);
                 }
                 break;
+            // --- MODIFICATION START ---
+            case 'requestDeleteItem': // New action for player-initiated deletions
+                if (game.user.isGM) {
+                    const { boardId, itemId } = payload.data;
+                    // The GM executes the delete, which will save and broadcast to all clients.
+                    await ClueBoardData.deleteItem(boardId, itemId);
+                }
+                break;
+            // --- MODIFICATION END ---
         }
     }
 
@@ -91,7 +100,7 @@ class SocketController {
             Object.values(ui.windows).forEach(app => {
                 if (app.constructor.name === 'ClueBoardDialog' && app.boardId === boardId) {
                     app.currentBoardData = boardData; 
-                    app.render(true);
+                    app.render(false, { focus: false }); 
                 }
                 if (app.constructor.name === 'ClueBoardManagerDialog') {
                     // Manager might need to update if a board's name/hidden status changed.
@@ -189,6 +198,25 @@ class SocketController {
             this.socket.emit(SOCKET_EVENT, payload);
         }
     }
+    
+    // --- MODIFICATION START ---
+    /**
+     * Sends a request from a player to the GM to delete an item.
+     * @param {string} boardId The ID of the board containing the item.
+     * @param {string} itemId The ID of the item to delete.
+     */
+    requestDeleteItem(boardId, itemId) {
+        if (!game.user.isGM) {
+            const payload = {
+                action: 'requestDeleteItem',
+                senderId: game.user.id,
+                data: { boardId, itemId },
+                timestamp: Date.now()
+            };
+            this.socket.emit(SOCKET_EVENT, payload);
+        }
+    }
+    // --- MODIFICATION END ---
 }
 
 export const socketController = new SocketController();

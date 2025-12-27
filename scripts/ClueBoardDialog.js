@@ -1,4 +1,3 @@
-// scripts/ClueBoardDialog.js
 import { MODULE_ID, TEMPLATES, DEFAULT_ACTOR_ITEM_WIDTH, DEFAULT_ACTOR_ITEM_HEIGHT, DEFAULT_NOTE_WIDTH, DEFAULT_NOTE_HEIGHT, NODE_RADIUS, DEFAULT_NODE_WIDTH, DEFAULT_NODE_HEIGHT, PLACEHOLDER_IMAGE_PATH } from './constants.js';
 import { ClueBoardData } from './ClueBoardData.js';
 import { ClueBoardConfigDialog } from './ClueBoardConfigDialog.js';
@@ -14,6 +13,21 @@ export class ClueBoardDialog extends Application {
 		super(options);
 		this.boardId = boardId;
 		this.currentBoardData = ClueBoardData.getBoardData(boardId);
+
+        if (this.currentBoardData && this.currentBoardData.config) {
+            const boardWidth = this.currentBoardData.config.width || 1000;
+            const boardHeight = this.currentBoardData.config.height || 1000;
+            const dialogWidth = boardWidth + 40;
+            const dialogHeight = boardHeight + 70;
+
+            if (dialogWidth > window.innerWidth || dialogHeight > window.innerHeight) {
+                this.options.resizable = true;
+            } else {
+                this.options.resizable = false;
+            }
+        } else {
+            this.options.resizable = true;
+        }
 		
 		// Single item drag state
 		this.draggingItem = null; // The jQuery element of the item being dragged (primary in multi-drag)
@@ -1514,32 +1528,39 @@ async _render(force = false, options = {}) {
 		});
 
 		if (confirmed) {
-			try {
-                if (this.selectedItemIds.has(itemId)) {
-                    this._toggleItemSelected(itemId, false); 
+            // Perform an optimistic update for a smoother UX
+            if (this.selectedItemIds.has(itemId)) {
+                this._toggleItemSelected(itemId, false); 
+            }
+            if (this.currentBoardData.items[itemId]) {
+                delete this.currentBoardData.items[itemId];
+            }
+            if (this.currentBoardData.connections) {
+                this.currentBoardData.connections = this.currentBoardData.connections.filter(conn => 
+                    conn.fromItemId !== itemId && conn.toItemId !== itemId
+                );
+            }
+            if (this.currentBoardData.itemSelections && this.currentBoardData.itemSelections[itemId]) {
+                delete this.currentBoardData.itemSelections[itemId];
+            }
+            this.render(false);
+
+            // --- MODIFICATION START ---
+            // If GM, delete directly. If Player, send request to GM.
+            if (isGM) {
+                try {
+                    await ClueBoardData.deleteItem(this.boardId, itemId); 
+                } catch (error) {
+                    ui.notifications.error(`Failed to delete item ${itemId}.`);
+                    // If the deletion fails, refresh the board from the source of truth
+                    this.currentBoardData = ClueBoardData.getBoardData(this.boardId);
+                    this.render(false);
                 }
-				
-				if (this.currentBoardData.items[itemId]) {
-					delete this.currentBoardData.items[itemId];
-				}
-				if (this.currentBoardData.connections) {
-					this.currentBoardData.connections = this.currentBoardData.connections.filter(conn => 
-						conn.fromItemId !== itemId && conn.toItemId !== itemId
-					);
-				}
-                if (this.currentBoardData.itemSelections && this.currentBoardData.itemSelections[itemId]) {
-                    delete this.currentBoardData.itemSelections[itemId];
-                }
-				
-				await this.render(false); 
-				
-				await ClueBoardData.deleteItem(this.boardId, itemId); 
-				
-			} catch (error) {
-				ui.notifications.error(`Failed to delete item ${itemId}.`);
-				this.currentBoardData = ClueBoardData.getBoardData(this.boardId);
-				await this.render(false);
-			}
+            } else {
+                // Player sends a request to the GM to delete the item
+                socketController.requestDeleteItem(this.boardId, itemId);
+            }
+            // --- MODIFICATION END ---
 		}
 	}
  
@@ -1575,11 +1596,11 @@ async _render(force = false, options = {}) {
 
         if (configChanges.width !== undefined) {
             boardCanvas.css('width', configChanges.width + 'px');
-            this.position.width = configChanges.width + 40;
+            this.position.width = configChanges.width + 8;
         }
         if (configChanges.height !== undefined) {
             boardCanvas.css('height', configChanges.height + 'px');
-            this.position.height = configChanges.height + 70;
+            this.position.height = configChanges.height + 38;
         }
         if (configChanges.backgroundImage !== undefined) {
             boardCanvas.css('background-image', `url('${configChanges.backgroundImage}')`);

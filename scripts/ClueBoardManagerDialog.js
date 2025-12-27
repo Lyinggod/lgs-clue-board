@@ -62,6 +62,14 @@ export class ClueBoardManagerDialog extends Application {
         super.activateListeners(html);
         const isGM = game.user.isGM;
 
+        // --- MODIFICATION START ---
+        // Make board entries draggable to the hotbar to create a macro
+        html.find('.board-entry[data-board-id]').each((i, el) => {
+            el.setAttribute('draggable', true);
+            el.addEventListener('dragstart', this._onDragStart.bind(this));
+        });
+        // --- MODIFICATION END ---
+
         html.find('.add-board').on('click', this._onAddBoard.bind(this));
         
         html.find('.board-entry .board-name, .board-entry .view-board').on('click', ev => {
@@ -150,5 +158,28 @@ export class ClueBoardManagerDialog extends Application {
 
         await ClueBoardData.updateBoardMetadata(boardId, { isHidden: !boardData.isHidden });
         this.render(true);
+    }
+
+    /**
+     * --- MODIFICATION START ---
+     * Handles the drag start event for a board entry to create a macro.
+     * @param {DragEvent} event The drag event.
+     * --- MODIFICATION END ---
+     */
+    _onDragStart(event) {
+        const boardId = event.currentTarget.dataset.boardId;
+        const boardData = ClueBoardData.getBoardData(boardId);
+        if (!boardData) return;
+
+        const dragData = {
+            type: "Macro",
+            data: {
+                name: `Clue Board: ${boardData.name}`,
+                type: "script",
+                img: "icons/sundries/documents/document-sealed-signatures-red.webp",
+                command: `game.modules.get('${MODULE_ID}').api.openBoard('${boardData.id}');`
+            }
+        };
+        event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
     }
 }

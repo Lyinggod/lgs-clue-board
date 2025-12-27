@@ -7,7 +7,11 @@ export class ClueBoardConfigDialog extends FormApplication {
         super(ClueBoardData.getBoardData(boardId).config, options);
         this.boardId = boardId;
         this.parentBoardDialog = parentBoardDialog;
-        this.currentConfig = foundry.utils.deepClone(ClueBoardData.getBoardData(boardId).config);
+        // Store the original config to revert if the dialog is cancelled
+        this.originalConfig = foundry.utils.deepClone(ClueBoardData.getBoardData(boardId).config);
+        // This is the working copy that gets modified by user interaction.
+        this.currentConfig = foundry.utils.deepClone(this.originalConfig);
+        this.submitted = false; // Flag to track if the save button was clicked
 
         if (typeof this.currentConfig.globalItemScale === 'undefined') {
             this.currentConfig.globalItemScale = 1.0;
@@ -66,6 +70,12 @@ export class ClueBoardConfigDialog extends FormApplication {
         html.find('input[type="range"]').on('input', this._onRangeChange.bind(this));
         html.find('input[type="checkbox"], input[type="text"][name="config.backgroundImage"], select[name="config.imageFrameType"]')
             .on('change', this._onInputChange.bind(this));
+
+        // New listener for the cancel button
+        html.find('.cancel-button').on('click', (event) => {
+            event.preventDefault();
+            this.close();
+        });
 
         html.find('input[type="range"]').each((idx, el) => {
             const input = $(el);
@@ -168,6 +178,7 @@ export class ClueBoardConfigDialog extends FormApplication {
     }
 
     async _updateObject(event, formData) {
+        this.submitted = true; // Mark as saved
         if (this.currentConfig.globalItemScale) {
             this.currentConfig.globalItemScale = parseFloat(this.currentConfig.globalItemScale);
         } else {
@@ -181,5 +192,23 @@ export class ClueBoardConfigDialog extends FormApplication {
             this.parentBoardDialog.currentBoardData = ClueBoardData.getBoardData(this.boardId);
             this.parentBoardDialog.render(false); 
         }
+    }
+
+    /**
+     * Overridden close method to handle reverting changes if not saved.
+     */
+    async close(options) {
+        if (!this.submitted && this.parentBoardDialog && this.parentBoardDialog.rendered) {
+            // Revert the parent's in-memory data to the original state that was
+            // snapshotted when this config dialog was first opened.
+            this.parentBoardDialog.currentBoardData.config = this.originalConfig;
+            
+            // Call the parent's existing updateAppearance method, passing the entire original config.
+            // This method is already designed to handle all visual updates, including resizing the
+            // window frame via setPosition, and will correctly reset the dialog to its last saved state.
+            this.parentBoardDialog.updateAppearance(this.originalConfig);
+        }
+        // Proceed with the standard closing procedure.
+        return super.close(options);
     }
 }

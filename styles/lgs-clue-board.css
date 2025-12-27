@@ -1,6 +1,6 @@
-/* styles/lgs-clue-board-v2.css */
+/* styles/lgs-clue-board.css */
 
-.lgs-clue-board-v2 .window-content {
+.lgs-clue-board .window-content {
     overflow-y: auto; /* For manager dialog if list is long */
 }
 
@@ -251,7 +251,7 @@
 }
 
 /* Add Clue Dialog Palette */
-.lgs-clue-board-v2-add-clue-dialog .clue-palette {
+.lgs-clue-board-add-clue-dialog .clue-palette {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -259,7 +259,7 @@
     max-height: 400px; 
     overflow-y: auto;
 }
-.lgs-clue-board-v2-add-clue-dialog .palette-item {
+.lgs-clue-board-add-clue-dialog .palette-item {
     width: 60px; 
     display: flex;
     flex-direction: column;
@@ -270,11 +270,11 @@
     cursor: grab;
     background-color: #f9f9f9;
 }
-.lgs-clue-board-v2-add-clue-dialog .palette-item:hover {
+.lgs-clue-board-add-clue-dialog .palette-item:hover {
     background-color: #eee;
     border-color: #aaa;
 }
-.lgs-clue-board-v2-add-clue-dialog .palette-item-icon {
+.lgs-clue-board-add-clue-dialog .palette-item-icon {
     width: 50px;
     height: 50px;
     display: flex;
@@ -282,11 +282,11 @@
     justify-content: center;
     margin-bottom: 3px; 
 }
-.lgs-clue-board-v2-add-clue-dialog .palette-item-icon.actor-icon {
+.lgs-clue-board-add-clue-dialog .palette-item-icon.actor-icon {
     object-fit: cover; 
     border: 1px solid #ddd;
 }
-.lgs-clue-board-v2-add-clue-dialog .palette-item-name {
+.lgs-clue-board-add-clue-dialog .palette-item-name {
     font-size: 0.8em;
     text-align: center;
     word-break: break-word; 
@@ -361,7 +361,7 @@
     align-items: center;
 }
 
-.lgs-clue-board-v2-clue-item-config label, .lgs-clue-board-v2-clue-board-config label {
+.lgs-clue-board-clue-item-config label, .lgs-clue-board-clue-board-config label {
 	white-space: nowrap;
 }
 
@@ -421,7 +421,7 @@
     opacity: 1;
 }
 
-.lgs-clue-board-v2-flex-center {
+.lgs-clue-board-flex-center {
 	max-height:650px;
 	max-width:650px;
 }
