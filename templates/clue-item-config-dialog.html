@@ -37,6 +37,9 @@
                 <option value="{{typeChoice.value}}" {{#if (eq typeChoice.value ../item.imageFrameType)}}selected{{/if}}>{{typeChoice.label}}</option>
                 {{/each}}
             </select>
+            <!-- --- MODIFICATION START --- -->
+            <p class="notes">{{localize "LGS_CB2.ImageFrameType.Hint"}}</p>
+            <!-- --- MODIFICATION END --- -->
         </div>
         {{/if}}
 

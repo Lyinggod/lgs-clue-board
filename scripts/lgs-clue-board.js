@@ -1,3 +1,5 @@
+// lgs-clue-board.js
+
 import { MODULE_ID, MODULE_NAME, TEMPLATES, FLAGS } from './constants.js';
 import { ClueBoardManagerDialog } from './ClueBoardManagerDialog.js';
 import { socketController } from './SocketController.js';
@@ -7,7 +9,8 @@ import './ClueBoardConfigDialog.js';
 import { ClueItemConfigDialog } from './ClueItemConfigDialog.js';
 import { AddClueDialog } from './AddClueDialog.js'; 
 import { ClueNodeConfigDialog } from './ClueNodeConfigDialog.js'; 
-import { RevealImageDialog } from './RevealImageDialog.js'; // Import new dialog
+import { RevealImageDialog } from './RevealImageDialog.js';
+import './ClueBoardHandlebars.js'; // --- MODIFICATION: ADD THIS LINE ---
 
 
 Hooks.once('init', () => {

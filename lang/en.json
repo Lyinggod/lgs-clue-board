@@ -126,6 +126,8 @@
   "LGS_CB2.ImageFrameType.Photo": "Photo Frame",
   "LGS_CB2.ImageFrameType.Circle": "Circle",
   "LGS_CB2.ImageFrameType.Square": "Square",
+  "LGS_CB2.ImageFrameType.Unframed": "Unframed Image",
+  "LGS_CB2.ImageFrameType.Hint": "Unframed Image option recommended for images with transparent backgrounds. The item's draggable area will match the scaled image size.",
   "LGS_CB2.ClueItemConfig.ImageFrameType": "Item Image Frame",
   "LGS_CB2.ImageFrameType.BoardDefault": "Use Board Default"
 }

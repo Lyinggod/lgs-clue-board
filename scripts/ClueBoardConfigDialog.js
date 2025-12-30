@@ -51,11 +51,14 @@ export class ClueBoardConfigDialog extends FormApplication {
         if (typeof configForTemplate.imageFrameType === 'undefined') {
             configForTemplate.imageFrameType = "photo";
         }
+        // --- MODIFICATION START ---
         const imageFrameTypes = [
             { value: "photo", label: game.i18n.localize("LGS_CB2.ImageFrameType.Photo") },
             { value: "circle", label: game.i18n.localize("LGS_CB2.ImageFrameType.Circle") },
-            { value: "square", label: game.i18n.localize("LGS_CB2.ImageFrameType.Square") }
+            { value: "square", label: game.i18n.localize("LGS_CB2.ImageFrameType.Square") },
+            { value: "unframed", label: game.i18n.localize("LGS_CB2.ImageFrameType.Unframed") }
         ];
+        // --- MODIFICATION END ---
 
         return {
             config: configForTemplate, 

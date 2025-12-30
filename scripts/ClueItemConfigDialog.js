@@ -78,12 +78,15 @@ export class ClueItemConfigDialog extends FormApplication {
             }
         }
 
+        // --- MODIFICATION START ---
         const itemImageFrameTypes = [
             { value: "board_default", label: game.i18n.localize("LGS_CB2.ImageFrameType.BoardDefault") },
             { value: "photo", label: game.i18n.localize("LGS_CB2.ImageFrameType.Photo") },
             { value: "circle", label: game.i18n.localize("LGS_CB2.ImageFrameType.Circle") },
-            { value: "square", label: game.i18n.localize("LGS_CB2.ImageFrameType.Square") }
+            { value: "square", label: game.i18n.localize("LGS_CB2.ImageFrameType.Square") },
+            { value: "unframed", label: game.i18n.localize("LGS_CB2.ImageFrameType.Unframed") }
         ];
+        // --- MODIFICATION END ---
 
         if ((this.itemData.type === 'actor' || this.itemData.isCustomImage || this.itemData.isPlaceholder) && typeof this.itemData.imageFrameType === 'undefined') {
             this.itemData.imageFrameType = 'board_default';
