@@ -75,6 +75,7 @@ The right clicking on items in the clue board will show an options menu.
 - **Background Scale** - Change the size of the background image of the clue board.
 - **Global Item Scale** - Change the size of items on the clue board.
 - **Image Frame Type** - Set the default frame type for the clue board
+  - Includes "Unbound Frame" option which removes clipping on the raw image. Useful for images with transparent backgrounds such as monsters or ships.
 - **Prevent Player Interaction** - Used if clue board is entirely for informational purposes
 
 # Installation
